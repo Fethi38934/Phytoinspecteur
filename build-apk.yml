@@ -1,0 +1,72 @@
+name: 🌿 بناء PhytoInspect APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:   # تشغيل يدوي بضغطة زر
+
+jobs:
+  build-apk:
+    name: Build APK — Android
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # ── 1. تحميل الكود ──────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Node.js 22 ────────────────────────────────────
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      # ── 3. Java 17 ───────────────────────────────────────
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # ── 4. EAS CLI ───────────────────────────────────────
+      - name: Install EAS CLI
+        run: npm install -g eas-cli@latest
+
+      # ── 5. المكتبات ──────────────────────────────────────
+      - name: Install dependencies
+        run: npm install
+
+      # ── 6. بناء APK محلياً بدون حساب Expo ───────────────
+      - name: Setup Expo & prebuild Android
+        run: |
+          npx expo install --fix
+          npx expo prebuild --platform android --clean
+
+      # ── 7. منح صلاحيات Gradle ────────────────────────────
+      - name: Grant Gradle permissions
+        run: chmod +x android/gradlew
+
+      # ── 8. بناء APK ───────────────────────────────────────
+      - name: Build Release APK
+        run: |
+          cd android
+          ./gradlew assembleRelease --no-daemon \
+            -Pandroid.useAndroidX=true \
+            -Pandroid.enableJetifier=true
+
+      # ── 9. رفع APK ────────────────────────────────────────
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PhytoInspect-v7-APK
+          path: android/app/build/outputs/apk/release/app-release.apk
+          retention-days: 30
+
+      # ── 10. معلومات الملف ─────────────────────────────────
+      - name: APK info
+        run: |
+          APK=android/app/build/outputs/apk/release/app-release.apk
+          echo "✅ APK جاهز"
+          echo "📦 الحجم: $(du -sh $APK | cut -f1)"
