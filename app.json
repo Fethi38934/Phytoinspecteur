@@ -1,0 +1,98 @@
+{
+  "expo": {
+    "name": "PhytoInspect 2026",
+    "slug": "phytoinspect",
+    "version": "7.0.0",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "phytoinspect",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f172a"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "dz.gov.dsa.phytoinspect",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "PhytoInspect يحتاج الكاميرا لتصوير أعراض النبات وتشخيصها.",
+        "NSPhotoLibraryUsageDescription": "PhytoInspect يحتاج اختيار صور النباتات من المعرض للتشخيص.",
+        "NSLocationWhenInUseUsageDescription": "PhytoInspect يستخدم الموقع لإرفاق سجلات التفتيش والخريطة الحرارية.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "dz.gov.dsa.phytoinspect",
+      "versionCode": 7,
+      "compileSdkVersion": 35,
+      "targetSdkVersion": 35,
+      "minSdkVersion": 24,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#0f172a"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.INTERNET",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ],
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/images/icon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-web-browser",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "PhytoInspect يحتاج الكاميرا لتصوير أعراض النبات وتشخيصها.",
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "PhytoInspect يحتاج اختيار صور النباتات من المعرض للتشخيص.",
+          "cameraPermission": "PhytoInspect يحتاج الكاميرا لتصوير النباتات."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "PhytoInspect يستخدم الموقع لإرفاق سجلات التفتيش والخريطة الحرارية."
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0f172a",
+          "image": "./assets/images/icon.png",
+          "imageWidth": 200
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "phytoinspect-2026"
+      }
+    }
+  }
+}
